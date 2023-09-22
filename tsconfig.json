@@ -3,6 +3,9 @@
       "sourceMap": true,
       "outDir": "dist",
       "lib": ["esnext"],
-      "esModuleInterop": true
+      "esModuleInterop": true,
+    },
+    "files": [
+      "custom.d.ts",
+    ]
     }
-  }

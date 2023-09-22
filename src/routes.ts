@@ -6,8 +6,7 @@ const router = express.Router();
 router
   .route("/products")
   .get((req, res) => {
-    console.log("get products");
-    res.status(200).json({ msg: "get products" });
+    res.status(200).json({ msg: req.hehe });
   })
   .post(() => {});
 

@@ -2,7 +2,7 @@ import express from "express";
 
 const router = express.Router();
 
-//Products
+//Products routes
 router
   .route("/products")
   .get((req, res) => {
@@ -17,7 +17,7 @@ router
   .put(() => {})
   .delete(() => {});
 
-//Updates
+//Updates routes
 router
   .route("/update")
   .get(() => {})
@@ -29,7 +29,7 @@ router
   .put(() => {})
   .delete(() => {});
 
-//Update Points
+//Update Points routes
 router
   .route("/updatepoint")
   .get(() => {})

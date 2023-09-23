@@ -3,7 +3,7 @@ import { body, validationResult } from "express-validator";
 
 const router = express.Router();
 
-Products routes
+// Products routes
 router
   .route("/product")
   .get((req, res) => {

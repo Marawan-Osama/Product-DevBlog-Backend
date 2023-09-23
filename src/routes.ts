@@ -1,17 +1,25 @@
 import express from "express";
+import { body, validationResult } from "express-validator";
 
 const router = express.Router();
 
-//Products routes
+Products routes
 router
-  .route("/products")
+  .route("/product")
   .get((req, res) => {
     res.status(200).json({ msg: req.hehe });
   })
-  .post(() => {});
+  .post(body('name'),(req,res) => {
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+      return res.status(400).json({errors: errors.array()});
+    }
+    res.status(201).json({ msg: "This is a test" });
+  });
+
 
 router
-  .route("/products/:id")
+  .route("/product/:id")
   .get(() => {})
   .put(() => {})
   .delete(() => {});

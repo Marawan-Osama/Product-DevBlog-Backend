@@ -1,51 +1,90 @@
 import express from "express";
-import { body, validationResult } from "express-validator";
+import { body, oneOf, validationResult } from "express-validator";
+import { handleInputErrors } from "./modules/validationMiddleware";
+import {
+  getProducts,
+  getSingleProduct,
+  updateProduct,
+  deleteProduct,
+  createProduct,
+} from "./handlers/product";
+import {
+  getUpdates,
+  getSingleUpdate,
+  updateUpdate,
+  deleteUpdate,
+  createUpdate,
+} from "./handlers/update";
 
 const router = express.Router();
 
 // Products routes
 router
   .route("/product")
-  .get((req, res) => {
-    res.status(200).json({ msg: req.hehe });
-  })
-  .post(body('name'),(req,res) => {
-    const errors = validationResult(req);
-    if(!errors.isEmpty()){
-      return res.status(400).json({errors: errors.array()});
-    }
-    res.status(201).json({ msg: "This is a test" });
-  });
-
+  .get(getProducts)
+  .post(body("name"), handleInputErrors, createProduct);
 
 router
   .route("/product/:id")
-  .get(() => {})
-  .put(() => {})
-  .delete(() => {});
+  .get(getSingleProduct)
+  .put(body("name").isString(), handleInputErrors, updateProduct)
+  .delete(deleteProduct);
 
 //Updates routes
 router
   .route("/update")
-  .get(() => {})
-  .post(() => {});
+  .get(getUpdates)
 
+  .post(
+    body("title").exists(),
+    body("body").exists(),
+    body("status").isIn(["IN_PROGRESS", "SHIPPED", "DEPRECATED"]).optional(),
+    body("version").optional(),
+    body('productId').exists().isString(),
+    handleInputErrors,
+    createUpdate
+  )
 router
   .route("/update/:id")
-  .get(() => {})
-  .put(() => {})
-  .delete(() => {});
+  .get(getSingleUpdate)
+
+  .put(
+    body("title").optional(),
+    body("body").optional(),
+    body("status").isIn(["IN_PROGRESS", "SHIPPED", "DEPRECATED"]),
+    body("version").optional(),
+    handleInputErrors,
+    updateUpdate
+  )
+
+  .delete(deleteUpdate);
 
 //Update Points routes
 router
   .route("/updatepoint")
   .get(() => {})
-  .post(() => {});
+  .post(
+    body("name").isString(),
+    body("description").isString(),
+    handleInputErrors,
+    (req, res) => {
+      res.status(201).json({ msg: "Update point created" });
+    }
+  );
 
 router
   .route("/updatepoint/:id")
   .get(() => {})
-  .put(() => {})
+
+  .put(
+    body("name").optional(),
+    body("description").optional(),
+    handleInputErrors,
+    (req, res) => {
+      res.status(200).json({ msg: "Update point updated" });
+    }
+  )
+
   .delete(() => {});
 
 export default router;

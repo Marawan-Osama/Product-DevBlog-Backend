@@ -19,6 +19,7 @@ import {
 const router = express.Router();
 
 // Products routes
+
 router
   .route("/product")
   .get(getProducts)

@@ -5,11 +5,11 @@ import * as dotenv from "dotenv";
 dotenv.config();
 import { protect } from "./modules/auth";
 import { createUser, signIn } from "./handlers/users";
+import testRouter from "./modules/getfortest";
 
 const app = express();
-
-app.use(morgan("dev"));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 declare global {
   namespace Express {
@@ -23,16 +23,14 @@ app.use((req, res, next) => {
   req.hehe = "hehe";
   next();
 });
-app.use(express.urlencoded({ extended: true }));
-app.use("/api/v1", protect, router);
 
+app.use('/', testRouter)
+app.use("/api/v1", protect, router);
 app.post("/user", createUser);
 app.post("/signin", signIn);
 
-app.get("/", (req, res) => {
-  res.status(200).json({ msg: "This is a test" });
-});
+export default app
 
-app.listen(3000, () => {
-  console.log("Server is running on port 3000");
-});
+// app.listen(3000, () => {
+//   console.log("Server is running on port 3000");
+// });

@@ -9,6 +9,7 @@ export const createJWT = (user) => {
   return token;
 };
 
+//protect function is a middleware that checks if the user is logged in or not
 export const protect = (req, res, next) => {
   const bearer = req.headers.authorization;
   if (!bearer || !bearer.startsWith("Bearer ")) {

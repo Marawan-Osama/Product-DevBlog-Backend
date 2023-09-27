@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
+//createJWT function creates a JWT token for the user
 export const createJWT = (user) => {
   const token = jwt.sign(
     { id: user.id, username: user.username },

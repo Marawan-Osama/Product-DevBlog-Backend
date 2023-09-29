@@ -31,6 +31,7 @@ app.post("/signin", signIn);
 
 export default app
 
+//commented the code below because we are using the app in the tests
 // app.listen(3000, () => {
 //   console.log("Server is running on port 3000");
 // });
